@@ -74,23 +74,26 @@ class app_ui(QWidget):
     def SelectFileDialog(self):         
         global stt
         global unlock
-        if unlock:
-            home_dir = str(Path.home())
-            file_name = QFileDialog.getOpenFileName(self, 'Open file', home_dir,"Sound files (*.ogg *.wav *.mp3 *.mp4 *.avi)")
-            if file_name[0]:
-                self.LoadFileButton.setEnabled(False)
-                l=stt.audio_to_text(file_name[0])  
-                f = open(str(file_name[0])+"-stt-executable.txt", 'w',encoding="utf-8")      
-                for index in l:
-                    f.write(index)
-                f.close()
-                f = open(str(file_name[0])+"-stt-executable.txt",encoding="utf-8")                
-                ReadyText = f.read()                
-                #self.ResultTextEditBox.clear()
-                self.ResultTextEditBox.appendPlainText(file_name[0]+"\n"+ReadyText+" \n ")
-                f.close()
-                self.LoadFileButton.setEnabled(True)
-        
+        try:
+            if unlock:
+                home_dir = str(Path.home())
+                file_name = QFileDialog.getOpenFileName(self, 'Open file', home_dir,"Sound files (*.ogg *.wav *.mp3 *.mp4 *.avi)")
+                if file_name[0]:
+                    self.LoadFileButton.setEnabled(False)
+                    l=stt.audio_to_text(file_name[0])  
+                    f = open(str(file_name[0])+"-stt-executable.txt", 'w',encoding="utf-8")      
+                    for index in l:
+                        f.write(index)
+                    f.close()
+                    f = open(str(file_name[0])+"-stt-executable.txt",encoding="utf-8")                
+                    ReadyText = f.read()                
+                    #self.ResultTextEditBox.clear()
+                    self.ResultTextEditBox.appendPlainText(file_name[0]+"\n"+ReadyText+" \n ")
+                    f.close()
+                    self.LoadFileButton.setEnabled(True)
+        except:
+            print("err")
+            
 
 
 if __name__ == "__main__":   

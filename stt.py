@@ -1,13 +1,14 @@
 # -*- coding: utf8 -*-
 """
-Конвертация wav/ogg -> текст
+convert wav/ogg -> text
 """
 import json
 import os
 import subprocess
 from datetime import datetime
-
+from sys import platform
 from vosk import KaldiRecognizer, Model  # оффлайн-распознавание от Vosk
+
 
 
 class STT:
@@ -18,7 +19,7 @@ class STT:
     default_init = {
         "model_path": "models/vosk/model",  # путь к папке с файлами STT модели Vosk
         "sample_rate": 48000,
-        "ffmpeg_path": "models/vosk"  # путь к ffmpeg
+        "ffmpeg_path": "models/vosk" # путь к ffmpeg
     }
 
     def __init__(self,
@@ -63,10 +64,12 @@ class STT:
             raise Exception(
                 "Ffmpeg: сохраните ffmpeg.exe в папку ffmpeg\n"
                 "Скачайте ffmpeg.exe по ссылке https://ffmpeg.org/download.html"
-                            )        
-        self.ffmpeg_path = self.ffmpeg_path + '/ffmpeg'
-        # для линукса закаментируйте верхнюю строку, разкаментируйте нижнюю
-        #self.ffmpeg_path = 'ffmpeg'
+                            )
+        if platform =='win32':  
+            self.ffmpeg_path = self.ffmpeg_path + '/ffmpeg'
+        else:
+            self.ffmpeg_path = 'ffmpeg'
+        
 
 
     def audio_to_text(self, audio_file_name=None) -> str:
@@ -95,7 +98,8 @@ class STT:
 
         # Чтение данных кусками и распознование через модель
         while True:
-            data = process.stdout.read(4000)
+            assert process.stdout is not None
+            data = process.stdout.read(4000)            
             if len(data) == 0:
                 break
             if self.recognizer.AcceptWaveform(data):

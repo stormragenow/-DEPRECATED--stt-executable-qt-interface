@@ -19,10 +19,11 @@ def stt_thread():
      global stt
      global unlock
      unlock=False
-     stt=STT()     
+     stt=STT()       
      unlock=True    
 
 stt_thread()
+
 class app_ui(QWidget):
     
     def __init__(self):

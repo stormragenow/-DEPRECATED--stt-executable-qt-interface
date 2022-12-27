@@ -7,7 +7,8 @@ import os
 import subprocess
 from datetime import datetime
 from sys import platform
-from vosk import KaldiRecognizer, Model  # оффлайн-распознавание от Vosk
+from vosk import KaldiRecognizer, Model
+import ffmpeg
 
 
 
@@ -17,9 +18,9 @@ class STT:
     Поддерживаются форматы аудио: wav, ogg
     """
     default_init = {
-        "model_path": "models/vosk/model",  # путь к папке с файлами STT модели Vosk
+        "model_path": "vosk/",  # путь к папке с файлами STT модели Vosk
         "sample_rate": 48000,
-        "ffmpeg_path": "models/vosk" # путь к ffmpeg
+        "ffmpeg_path": "ffmpeg/" # путь к ffmpeg
     }
 
     def __init__(self,
@@ -72,12 +73,8 @@ class STT:
         
 
 
-    def audio_to_text(self, audio_file_name=None) -> str:
-        """
-        Offline-распознавание аудио в текст через Vosk
-        :param audio_file_name: str путь и имя аудио файла
-        :return: str распознанный текст
-        """
+    def audio_to_text(self, audio_file_name=None) -> str:      
+        
         if audio_file_name is None:
             raise Exception("Укажите путь и имя файла")
         if not os.path.exists(audio_file_name):
@@ -109,11 +106,3 @@ class STT:
         result_json = self.recognizer.FinalResult()  # это json в виде str
         result_dict = json.loads(result_json)    # это dict
         return result_dict["text"]               # текст в виде str
-
-
-if __name__ == "__main__":
-    # Распознование аудио
-    start_time = datetime.now()
-    stt = STT()
-    print(stt.audio_to_text("test-1.mp3"))
-    print("Время выполнения:", datetime.now() - start_time)

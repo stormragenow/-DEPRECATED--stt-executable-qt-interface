@@ -8,7 +8,6 @@ import subprocess
 from datetime import datetime
 from sys import platform
 from vosk import KaldiRecognizer, Model
-import ffmpeg
 
 
 
@@ -50,22 +49,23 @@ class STT:
         """
         Проверка наличия модели Vosk на нужном языке в каталоге приложения
         """
+        voskModelCheck=None
         if not os.path.exists(self.model_path):
-            raise Exception(
-                "Vosk: сохраните папку model в папку vosk\n"
-                "Скачайте модель по ссылке https://alphacephei.com/vosk/models"
-                            )
+            voskModelCheck=False
+        else:
+            voskModelCheck = True
+            
+        #"Vosk: сохраните папку model в папку vosk\n"
+        #"Скачайте модель по ссылке https://alphacephei.com/vosk/models"        
+        ffmpegCheck=None
+        if not os.path.exists(self.ffmpeg_path):
+            ffmpegCheck=False
+        else:
+            ffmpegCheck=True
+                # "Ffmpeg: сохраните ffmpeg.exe в папку ffmpeg\n"
+                # "Скачайте ffmpeg.exe по ссылке https://ffmpeg.org/download.html"                           
 
-        isffmpeg_here = False
-        for file in os.listdir(self.ffmpeg_path):
-            if file.startswith('ffmpeg'):
-                isffmpeg_here = True
-
-        if not isffmpeg_here:
-            raise Exception(
-                "Ffmpeg: сохраните ffmpeg.exe в папку ffmpeg\n"
-                "Скачайте ffmpeg.exe по ссылке https://ffmpeg.org/download.html"
-                            )
+        
         if platform =='win32':  
             self.ffmpeg_path = self.ffmpeg_path + '/ffmpeg'
         else:

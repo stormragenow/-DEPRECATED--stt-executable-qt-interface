@@ -8,3 +8,4 @@ test.py
 ffmpeg/*.exe
 Vosk/*
 !Vosk/put-model-file-here.txt
+voskLarge

@@ -8,6 +8,7 @@ import subprocess
 from datetime import datetime
 from sys import platform
 from vosk import KaldiRecognizer, Model
+import download_lib
 
 
 
@@ -48,10 +49,12 @@ class STT:
     def _check_model(self):
         """
         Проверка наличия модели Vosk на нужном языке в каталоге приложения
-        """
+        """        
         voskModelCheck=None
-        if not os.path.exists(self.model_path):
-            voskModelCheck=False
+        if not os.path.exists(self.model_path):            
+            voskModelCheck=False            
+            download_lib.download_vosk()
+            # если нужна полная версия vosk, download_vosk(True)
         else:
             voskModelCheck = True
             
@@ -60,6 +63,7 @@ class STT:
         ffmpegCheck=None
         if not os.path.exists(self.ffmpeg_path):
             ffmpegCheck=False
+            download_lib.download_ffmpeg()
         else:
             ffmpegCheck=True
                 # "Ffmpeg: сохраните ffmpeg.exe в папку ffmpeg\n"
@@ -76,9 +80,9 @@ class STT:
     def audio_to_text(self, audio_file_name=None) -> str:      
         
         if audio_file_name is None:
-            raise Exception("Укажите путь и имя файла")
+            return "Укажите путь и имя файла"
         if not os.path.exists(audio_file_name):
-            raise Exception("Укажите правильный путь и имя файла")
+            return "Укажите правильный путь и имя файла"
 
         # Конвертация аудио в wav и результат в process.stdout
         process = subprocess.Popen(

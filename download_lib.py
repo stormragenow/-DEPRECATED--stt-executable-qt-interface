@@ -13,7 +13,7 @@ def download_ffmpeg():
     
     asset=dict(dict_all_releas['assets'][-1])
     download_file=requests.get(str(asset['browser_download_url']),allow_redirects=True)
-    
+    os.mkdir('ffmpeg')
     with open(ffmpeg_file_archive_name,"wb") as ffmpegfile:
         ffmpegfile.write(download_file.content)
     

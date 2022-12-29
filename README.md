@@ -6,7 +6,7 @@
 
 #### По умолчания скачивается упрощенная версия Vosk модели, что бы качалась полная вам нужно изменить в файлe ``download_lib.py`` 30ю строчку на: ``def download_vosk(large=True):`` также вы можете сами [скачать](https://alphacephei.com/vosk/models) нужную вам модель и закинуть в папку vosk-model рядом с main.py
 
-
+ форматы с которыми это точно работает ``*.ogg *.wav *.mp3 *.mp4 *.avi``
 
 1.~~Для запуска необходимо скачать [Vosk model](https://alphacephei.com/vosk/models)~~
 

@@ -40,8 +40,8 @@ class STT:
         self.sample_rate = sample_rate if sample_rate else STT.default_init["sample_rate"]
         self.ffmpeg_path = ffmpeg_path if ffmpeg_path else STT.default_init["ffmpeg_path"]
 
-        self._check_model()
-
+        #self._check_model()
+        
         model = Model(self.model_path)
         self.recognizer = KaldiRecognizer(model, self.sample_rate)
         self.recognizer.SetWords(True)
@@ -69,11 +69,12 @@ class STT:
                 # "Ffmpeg: сохраните ffmpeg.exe в папку ffmpeg\n"
                 # "Скачайте ffmpeg.exe по ссылке https://ffmpeg.org/download.html"                           
 
-        
+        # проверка ос
         if platform =='win32':  
             self.ffmpeg_path = self.ffmpeg_path + '/ffmpeg'
         else:
             self.ffmpeg_path = 'ffmpeg'
+        return voskModelCheck,ffmpegCheck
         
 
 

@@ -5,6 +5,8 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtCore import QMutex, QObject, QThread, pyqtSignal
 from pathlib import Path
 import sys
+import time
+import os
 from stt import STT
 
 def thread(my_func):
@@ -24,17 +26,30 @@ def stt_thread():
 
 stt_thread()
 
+class Thread(QThread):
+    _signal = pyqtSignal(int)
+    def __init__(self):
+        super(Thread, self).__init__()
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        for i in range(100):
+            time.sleep(0.1)
+            self._signal.emit(i)
+    
 class app_ui(QWidget):
     
     def __init__(self):
         super().__init__()     
-        
+        self.setWindowIcon(QtGui.QIcon('icon.png'))
         # self.StartButton = QtWidgets.QPushButton(self)        
         # self.StartButton.setGeometry(QtCore.QRect(140, 0, 141, 31))
         # self.StartButton.setObjectName("StartButton")
         self.ResultTextEditBox = QtWidgets.QPlainTextEdit(self)
         self.ResultTextEditBox.setGeometry(QtCore.QRect(10, 30, 1040, 555))
-
+        
         # self.LabelInform = QtWidgets.QLabel(self)
         # self.LabelInform.setGeometry(QtCore.QRect(590, 10, 90, 15))
         # self.LabelInform.setObjectName("LabelInform")
@@ -48,9 +63,8 @@ class app_ui(QWidget):
         self.LoadFileButton.setObjectName("LoadFileButton")
         self.LoadFileButton.setCheckable(True)        
         self.LoadFileButton.clicked.connect(self.SelectFileDialog)
-
-        self.initUI()
-         
+        self.initUI()    
+    
 
     def initUI(self):      
         self.setGeometry(300, 300, 1060, 600)
@@ -74,7 +88,8 @@ class app_ui(QWidget):
 
     def SelectFileDialog(self):         
         global stt
-        global unlock
+        global unlock      
+             
         try:
             if unlock:
                 home_dir = str(Path.home())
@@ -92,14 +107,20 @@ class app_ui(QWidget):
                     self.ResultTextEditBox.appendPlainText(file_name[0]+"\n"+ReadyText+" \n ")
                     f.close()
                     self.LoadFileButton.setEnabled(True)
+            else:
+                msg = QMessageBox()
+                msg.setWindowIcon(QtGui.QIcon('icon.png'))                
+                msg.setText('происходит загрузка библиотек, попробуйте выбрать файл немного позже')
+                msg.setWindowTitle("Подождите...")
+                msg.exec()  
         except:
             print("err")
-            
+  
 
 
 if __name__ == "__main__":   
     import sys      
     app = QtWidgets.QApplication(sys.argv [1:])    
-    ui = app_ui()
-    ui.show()      
+    ui = app_ui()    
+    ui.show()   
     sys.exit(app.exec())

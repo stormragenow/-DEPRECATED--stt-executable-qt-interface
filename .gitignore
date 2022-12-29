@@ -3,6 +3,7 @@ __pycache__
 models/*
 .vscode
 output
-volume.ico
 test.py
 voskLarge
+ffmpeg
+vosk

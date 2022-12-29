@@ -18,7 +18,7 @@ class STT:
     Поддерживаются форматы аудио: wav, ogg
     """
     default_init = {
-        "model_path": "vosk/",  # путь к папке с файлами STT модели Vosk
+        "model_path": "vosk-model/",  # путь к папке с файлами STT модели Vosk
         "sample_rate": 48000,
         "ffmpeg_path": "ffmpeg/" # путь к ffmpeg
     }
@@ -40,7 +40,7 @@ class STT:
         self.sample_rate = sample_rate if sample_rate else STT.default_init["sample_rate"]
         self.ffmpeg_path = ffmpeg_path if ffmpeg_path else STT.default_init["ffmpeg_path"]
 
-        #self._check_model()
+        self._check_model()
         
         model = Model(self.model_path)
         self.recognizer = KaldiRecognizer(model, self.sample_rate)
@@ -58,7 +58,7 @@ class STT:
         else:
             voskModelCheck = True
             
-        #"Vosk: сохраните папку model в папку vosk\n"
+        #"Vosk: сохраните папку model в папку vosk-model\n"
         #"Скачайте модель по ссылке https://alphacephei.com/vosk/models"        
         ffmpegCheck=None
         if not os.path.exists(self.ffmpeg_path):

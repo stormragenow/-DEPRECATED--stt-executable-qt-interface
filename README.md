@@ -1,4 +1,4 @@
-# tts-executable-qt-interface
+# stt-executable-qt-interface
 
 ## Это инструмент для преобразования аудио и видео в текст, на базе [Vosk](https://alphacephei.com/vosk/)
 

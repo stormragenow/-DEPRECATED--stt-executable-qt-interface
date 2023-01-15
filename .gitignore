@@ -8,3 +8,4 @@ voskLarge
 vosk-model
 ffmpeg
 vosk
+tts.py

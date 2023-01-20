@@ -1,4 +1,4 @@
-# stt-executable-qt-interface
+# stt-executable-qt-interface (транскрибатор офлайн)
 
 ## Это инструмент для преобразования аудио и видео в текст, на базе [Vosk](https://alphacephei.com/vosk/)
 

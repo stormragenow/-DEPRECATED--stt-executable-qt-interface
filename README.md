@@ -1,4 +1,6 @@
-# stt-executable-qt-interface (транскрибатор офлайн)
+# stt-executable-qt-interface  
+
+# transcriber offline* (транскрибатор офлайн*)
 
 ## Это инструмент для преобразования аудио и видео в текст, на базе [Vosk](https://alphacephei.com/vosk/)
 
@@ -9,7 +11,9 @@
 ##### Первый запуск будет немного долгий, все зависит от вашего интернета, скачивается около ~200мб (ffmpeg, vosk small model)
   
 ##### Форматы с которыми это точно работает ``ogg wav mp3 mp4 avi`` возможно работает и с другими, я проверял только эти
-  
+
+##### *для превого запуска интернет нужен
+
 1.~~Для запуска необходимо скачать [Vosk model](https://alphacephei.com/vosk/models)~~
   
 2.~~Скачать [ffmpeg](https://ffmpeg.org/download.html) (либо установить его в систему если вы иcпользуте не windows)~~

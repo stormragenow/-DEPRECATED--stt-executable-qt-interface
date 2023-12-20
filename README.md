@@ -1,3 +1,4 @@
+# [DEPRECATED] 
 # stt-executable-qt-interface  
 
 # transcriber offline* (транскрибатор офлайн*)
